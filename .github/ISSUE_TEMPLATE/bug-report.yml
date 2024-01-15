@@ -30,11 +30,9 @@ body:
     attributes:
       label: Who can help?
       description: |
-        Your issue will be replied to more quickly if you can figure out the right person to tag with @
-        Here is a rough guide of **who to tag**.
-        
-        All issues are read by one of the core maintainers, so if you don't know who to tag, just leave this blank and
-        a core maintainer will ping the right person.
+        To expedite the response to your issue, it would be helpful if you could identify the appropriate person to tag using the **@** symbol. Here is a general guideline on **whom to tag**.
+
+        Rest assured that all issues are reviewed by the core maintainers. If you are unsure about whom to tag, you can leave it blank, and a core maintainer will make sure to involve the appropriate person.
         
         Please tag fewer than 3 people.
         
@@ -73,11 +71,9 @@ body:
     attributes:
       label: Reproduction
       description: |
-        Please provide a code sample that reproduces the problem you ran into. It can be a Colab link or just a code snippet.
-        If you have code snippets, error messages, stack traces please provide them here as well.
-        Important! Use code tags to correctly format your code. See https://help.github.com/en/github/writing-on-github/creating-and-highlighting-code-blocks#syntax-highlighting
-        Do not use screenshots, as they are hard to read and (more importantly) don't allow others to copy-and-paste your code.
-        It is best if we can reproduce your issue by only copy-and-paste your scripts and codes.
+        Kindly share a code example that demonstrates the issue you encountered. It is recommanding to provide a code snippet directly. Additionally, if you have any error messages, or stack traces related to the problem, please include them here.
+        Remember to use code tags to properly format your code. You can refer to the link https://help.github.com/en/github/writing-on-github/creating-and-highlighting-code-blocks#syntax-highlighting for guidance on code formatting.
+        Please refrain from using screenshots, as they can be difficult to read and prevent others from copying and pasting your code. It would be most helpful if we could reproduce your issue by simply copying and pasting your scripts and codes.
 
       placeholder: |
         Steps to reproduce the behavior:
