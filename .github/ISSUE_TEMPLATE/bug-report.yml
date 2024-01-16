@@ -1,5 +1,5 @@
 name: "Bug Report"
-description: Submit a bug report to help us improve transformers
+description: Submit a bug report to help us improve TensorRT-LLM
 labels: [ "bug" ]
 body:
   - type: textarea
@@ -30,22 +30,24 @@ body:
     attributes:
       label: Who can help?
       description: |
-        To expedite the response to your issue, it would be helpful if you could identify the appropriate person 
+        To expedite the response to your issue, it would be helpful if you could identify the appropriate person
         to tag using the **@** symbol. Here is a general guideline on **whom to tag**.
 
-        Rest assured that all issues are reviewed by the core maintainers. If you are unsure about whom to tag, 
+        Rest assured that all issues are reviewed by the core maintainers. If you are unsure about whom to tag,
         you can leave it blank, and a core maintainer will make sure to involve the appropriate person.
 
         Please tag fewer than 3 people.
-        
-        Quantization: @Tracin 
 
-        Documentation: @juney-nvidia 
+        Quantization: @Tracin
+
+        Documentation: @juney-nvidia
 
         Feature request: @ncomly-nvidia
 
+        Performance: @kaiyux
+
         Others: @byshiue
-        
+
       placeholder: "@Username ..."
 
   - type: checkboxes
@@ -73,10 +75,10 @@ body:
     attributes:
       label: Reproduction
       description: |
-        Kindly share a code example that demonstrates the issue you encountered. It is recommending to provide a code snippet directly. 
+        Kindly share a code example that demonstrates the issue you encountered. It is recommending to provide a code snippet directly.
         Additionally, if you have any error messages, or stack traces related to the problem, please include them here.
 
-        Remember to use code tags to properly format your code. You can refer to the 
+        Remember to use code tags to properly format your code. You can refer to the
         link https://help.github.com/en/github/writing-on-github/creating-and-highlighting-code-blocks#syntax-highlighting for guidance on code formatting.
 
         Please refrain from using screenshots, as they can be difficult to read and prevent others from copying and pasting your code.
@@ -85,7 +87,7 @@ body:
       placeholder: |
         Steps to reproduce the behavior:
 
-          1.          
+          1.
           2.
           3.
 
