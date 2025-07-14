@@ -1,11 +1,13 @@
 from typing import Optional, Tuple
 
+import math
 import torch
 from torch import nn
 from transformers import Qwen3Config
 
-from tensorrt_llm.functional import PositionEmbeddingType
+from tensorrt_llm.functional import PositionEmbeddingType, RotaryScalingType
 
+from ...logger import logger
 from ..attention_backend import AttentionMetadata
 from ..attention_backend.interface import PositionalEmbeddingParams, RopeParams
 from ..model_config import ModelConfig
@@ -30,11 +32,28 @@ class Qwen3Attention(Attention):
     ):
         config = model_config.pretrained_config
 
-        if getattr(config, "rope_scaling", None) is not None:
+        rope_scaling = getattr(config, 'rope_scaling', None)
+        if rope_scaling is not None:
+            rope_type = rope_scaling.get('type', rope_scaling.get('rope_type'))
+            rope_factor = rope_scaling.get('factor', 1.0)
+
+            # Step 1: Find the upper bound of max_seq_len
+            inferred_max_seq_len = rope_scaling.get('original_max_position_embeddings', config.max_position_embeddings)
+
+            # Step 2: Scale max_seq_len with rotary scaling
+            if rope_factor != 1.0:
+                inferred_max_seq_len = int(
+                    math.ceil(inferred_max_seq_len * rope_factor))
+                logger.warning(
+                    f'max_seq_len is scaled to {inferred_max_seq_len} by rope scaling {rope_factor}'
+                )
+
+            rope_config = RopeParams.from_config(config)
+            rope_config.max_positions = inferred_max_seq_len
+            rope_config.is_neox = False
             pos_embd_params = PositionalEmbeddingParams(
-                type=PositionEmbeddingType.from_string(
-                    config.rope_scaling["type"]),
-                rope=RopeParams.from_config(config),
+                type=PositionEmbeddingType.from_string(rope_type),
+                rope=rope_config,
             )
         else:
             pos_embd_params = PositionalEmbeddingParams(
