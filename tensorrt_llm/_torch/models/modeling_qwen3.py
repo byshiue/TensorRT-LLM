@@ -1,11 +1,11 @@
+import math
 from typing import Optional, Tuple
 
-import math
 import torch
 from torch import nn
 from transformers import Qwen3Config
 
-from tensorrt_llm.functional import PositionEmbeddingType, RotaryScalingType
+from tensorrt_llm.functional import PositionEmbeddingType
 
 from ...logger import logger
 from ..attention_backend import AttentionMetadata
@@ -38,7 +38,9 @@ class Qwen3Attention(Attention):
             rope_factor = rope_scaling.get('factor', 1.0)
 
             # Step 1: Find the upper bound of max_seq_len
-            inferred_max_seq_len = rope_scaling.get('original_max_position_embeddings', config.max_position_embeddings)
+            inferred_max_seq_len = rope_scaling.get(
+                'original_max_position_embeddings',
+                config.max_position_embeddings)
 
             # Step 2: Scale max_seq_len with rotary scaling
             if rope_factor != 1.0:
