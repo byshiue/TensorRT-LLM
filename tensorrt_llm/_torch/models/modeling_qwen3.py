@@ -32,9 +32,15 @@ class Qwen3Attention(Attention):
         config = model_config.pretrained_config
 
         if getattr(config, "rope_scaling", None) is not None:
+            if "type" in config.rope_scaling:
+                pos_type = config.rope_scaling["type"]
+            elif "rope_type" in config.rope_scaling:
+                pos_type = config.rope_scaling["rope_type"]
+            else:
+                raise ValueError(
+                    "rope_scaling must have type or rope_type field")
             pos_embd_params = PositionalEmbeddingParams(
-                type=PositionEmbeddingType.from_string(
-                    config.rope_scaling["type"]),
+                type=PositionEmbeddingType.from_string(pos_type),
                 rope=RopeParams.from_config(config),
             )
         else:
