@@ -7,6 +7,7 @@ from .hf.mixtral_weight_mapper import MixtralHfWeightMapper
 from .hf.nemotron_h_weight_mapper import NemotronHHfWeightMapper
 from .hf.qwen2_moe_weight_mapper import Qwen2MoeHfWeightMapper
 from .hf.qwen3_moe_weight_mapper import Qwen3MoeHfWeightMapper
+from .hf.qwen3_next_weight_mapper import Qwen3NextHfWeightMapper
 from .hf.weight_loader import HfWeightLoader
 from .hf.weight_mapper import HfWeightMapper
 
@@ -14,5 +15,5 @@ __all__ = [
     "HfConfigLoader", "HfWeightLoader", "HfWeightMapper",
     "BaseCheckpointLoader", "HfCheckpointLoader", "NemotronHHfWeightMapper",
     "Gemma3HfWeightMapper", "MixtralHfWeightMapper", "Llama4HfWeightMapper",
-    "Qwen2MoeHfWeightMapper", "Qwen3MoeHfWeightMapper"
+    "Qwen2MoeHfWeightMapper", "Qwen3MoeHfWeightMapper", "Qwen3NextHfWeightMapper"
 ]

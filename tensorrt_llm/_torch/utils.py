@@ -284,3 +284,9 @@ def set_per_request_piecewise_cuda_graph_flag(enable: bool):
 
 def get_per_request_piecewise_cuda_graph_flag() -> bool:
     return getattr(_global_attrs, 'per_request_piecewise_cuda_graph_flag', True)
+
+def print_tensor(tensor, name, tp_rank):
+    PRINT_FIRST_RANK_TENSOR=False
+    if PRINT_FIRST_RANK_TENSOR and tensor is not None:
+        if tp_rank == 0:
+            print(f"[{tp_rank}] {name:>55}: {str(tensor.shape):>40}, mean: {tensor.float().abs().mean().item():.3f}, {tensor.float().abs().sum().item():.3f}, {tensor.float().abs().max().item():.3f}")
