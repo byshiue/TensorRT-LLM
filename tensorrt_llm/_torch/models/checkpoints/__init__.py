@@ -15,5 +15,6 @@ __all__ = [
     "HfConfigLoader", "HfWeightLoader", "HfWeightMapper",
     "BaseCheckpointLoader", "HfCheckpointLoader", "NemotronHHfWeightMapper",
     "Gemma3HfWeightMapper", "MixtralHfWeightMapper", "Llama4HfWeightMapper",
-    "Qwen2MoeHfWeightMapper", "Qwen3MoeHfWeightMapper", "Qwen3NextHfWeightMapper"
+    "Qwen2MoeHfWeightMapper", "Qwen3MoeHfWeightMapper",
+    "Qwen3NextHfWeightMapper"
 ]
