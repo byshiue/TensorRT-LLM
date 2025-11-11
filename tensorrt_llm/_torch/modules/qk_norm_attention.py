@@ -156,11 +156,13 @@ class QKNormRoPEAttention(Attention):
         config: ModelConfig,
         q_scaling: float = 1.0,
         disable_deep_gemm: bool = False,
+        is_qk_norm: bool = True,
     ):
         self.pretrained_config = config.pretrained_config
 
         self.fuse_qk_norm_rope = fuse_qk_norm_rope
         self.skip_rope = skip_rope
+        self.is_qk_norm = is_qk_norm
         assert not (fuse_qk_norm_rope and skip_rope
                     ), "Fusing qk norm and skipping rope is not supported"
 
@@ -183,13 +185,13 @@ class QKNormRoPEAttention(Attention):
         )
 
         self.q_norm = RMSNorm(hidden_size=self.head_dim,
-                              eps=self.pretrained_config.rms_norm_eps,
-                              dtype=self.pretrained_config.torch_dtype,
-                              has_weights=True)
+                            eps=self.pretrained_config.rms_norm_eps,
+                            dtype=self.pretrained_config.torch_dtype,
+                            has_weights=is_qk_norm)
         self.k_norm = RMSNorm(hidden_size=self.head_dim,
-                              eps=self.pretrained_config.rms_norm_eps,
-                              dtype=self.pretrained_config.torch_dtype,
-                              has_weights=True)
+                            eps=self.pretrained_config.rms_norm_eps,
+                            dtype=self.pretrained_config.torch_dtype,
+                            has_weights=is_qk_norm)
         self.aux_stream = torch.cuda.Stream()
         self.ln_events = [torch.cuda.Event(), torch.cuda.Event()]
 
@@ -222,7 +224,8 @@ class QKNormRoPEAttention(Attention):
             self.q_norm.variance_epsilon, self.q_norm.weight,
             self.k_norm.weight,
             self.pos_embd_params.rope.theta, self.pos_embd_params.is_neox,
-            position_ids.view(-1), factor, low, high, attention_factor)
+            position_ids.view(-1), factor, low, high, attention_factor,
+            self.is_qk_norm)
         return qkv, None, None
 
     def apply_rope(self, q: torch.Tensor, k: Optional[torch.Tensor],
