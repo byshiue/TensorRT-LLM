@@ -556,6 +556,7 @@ class DecoderModelForCausalLM(nn.Module,
 
     def load_weights(self,
                      weights: Dict,
+                     params_map: Optional[Dict] = None,
                      weight_mapper: Optional["BaseWeightMapper"] = None,
                      skip_modules: List[str] = []):
         # TODO smor- this solution is a temporary solution to load weights while we are still using
@@ -566,12 +567,14 @@ class DecoderModelForCausalLM(nn.Module,
             _load_weights_impl(self,
                                weights,
                                skip_modules,
+                               params_map=params_map,
                                preload_weight_modules=preload_weight_modules)
         else:
             _load_weights_impl_v2(self,
                                   weights,
                                   weight_mapper,
                                   skip_modules,
+                                  params_map=params_map,
                                   preload_weight_modules=preload_weight_modules)
 
     def infer_max_seq_len(self) -> int:

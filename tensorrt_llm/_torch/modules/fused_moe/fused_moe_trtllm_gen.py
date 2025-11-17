@@ -506,7 +506,6 @@ class TRTLLMGenFusedMoE(MoE):
         if self.enable_alltoall and self.moe_alltoall_backend == "mnnvlthroughput":
             moe_output = self.moe_a2a.get_combine_payload_tensor_in_workspace(
                 runtime_max_tokens_per_rank, self.hidden_size, torch.bfloat16)
-            use_workspace_output = True
 
         # TODO: since routing kernel is integrated into moe_runner for fp8,
         #       here we just route the I/Os for moe_runner
@@ -747,6 +746,7 @@ class TRTLLMGenFusedMoE(MoE):
                 token_selected_experts,
                 output=moe_output,
             )
+            use_workspace_output = True
         else:
             raise NotImplementedError(
                 "TRTLLMGenFusedMoE only supports fp8_block_scaling, nvfp4, w4a16_mxfp4, w4a8_mxfp4_mxfp8 and w4a8_mxfp4_fp8 dtypes."
